@@ -1,7 +1,8 @@
 package crypto;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 
 
@@ -51,17 +52,28 @@ public class CryptoTools
 	 * The non alphabetic char are replaced by the input parameter "nonAlphabeticReplace", or
 	 * ignored if the parameter is null.
 	 ==========================================================================*/
-	public static LinkedList<Integer> numerizeText(Scanner inputClearText, Integer nonAlphabeticReplace)
+	public static LinkedList<Integer> numerizeText(BufferedReader inputClearText, Integer nonAlphabeticReplace)
 	{
-		LinkedList<Integer> res = new LinkedList<Integer>();
-
-		while(inputClearText.hasNext())
+		try
 		{
-			int i = alphabeticCharToNumerical((char) inputClearText.nextInt());
-			if 		(i != -1)						res.add(i);
-			else if (nonAlphabeticReplace != null)	res.add(new Integer(nonAlphabeticReplace));
+			LinkedList<Integer> res = new LinkedList<Integer>();
+			int textChar;
+			textChar = inputClearText.read();
+			
+			while(textChar != -1)
+			{
+				int i = alphabeticCharToNumerical((char) inputClearText.read());
+				if 		(i != -1)						res.add(i);
+				else if (nonAlphabeticReplace != null)	res.add(new Integer(nonAlphabeticReplace));
+			}
+			return res;
 		}
-		return res;
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return null;
 	}
 
 	/**=======================================================================

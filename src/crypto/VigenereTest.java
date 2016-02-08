@@ -1,13 +1,13 @@
 package crypto;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 
 
@@ -16,7 +16,8 @@ import java.util.Scanner;
 
 
 
-public class Test
+
+public class VigenereTest
 {
 // -------------------------------------------------
 // Attributes
@@ -34,16 +35,15 @@ public class Test
 			System.out.println("Usage: <clear text name> <cyphered text name> <key>");
 			System.exit(0);
 		}
-
 		String clearFileName	= clearTextDir + args[0];
 		String cipheredFileName	= cipheredTextDir + args[1];
 		String key				= args[2];
-		Scanner sc = null;
-		Writer cipheredFile = null;
+		BufferedReader clearFile= null;
+		Writer cipheredFile		= null;
 
 		try
 		{
-			sc				= new Scanner (new File(clearFileName));
+			clearFile		= new BufferedReader(new FileReader(clearFileName));
 			cipheredFile	= new BufferedWriter(new OutputStreamWriter(new FileOutputStream(cipheredFileName), "utf-8"));
 		}
 		catch (Exception e)
@@ -52,12 +52,13 @@ public class Test
 			System.out.println("Usage: <clear text name> <cyphered text name> <key>");
 			System.exit(0);
 		}
-		LinkedList<Integer> cipheredText = Vigenere.cipher(sc, key);
+		LinkedList<Integer> cipheredText = Vigenere.cipher(clearFile, key);
 		for (Integer i:cipheredText)
 		{
 			cipheredFile.write(i);
 		}
-		sc.close();
+		clearFile.close();
 		cipheredFile.close();
+		System.out.println("End ciphering");
 	}
 }

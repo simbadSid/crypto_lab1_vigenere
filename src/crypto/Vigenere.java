@@ -1,7 +1,7 @@
 package crypto;
 
+import java.io.BufferedReader;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 
 
@@ -15,7 +15,7 @@ public class Vigenere
 	/**=======================================================================
 	 * Cipher the hole content of the input file using the Vigenere algorithm.
 	 ==========================================================================*/
-	public static LinkedList<Integer> cipher(Scanner inputClearText, String key)
+	public static LinkedList<Integer> cipher(BufferedReader inputClearText, String key)
 	{
 		LinkedList<Integer> clearText		= CryptoTools.numerizeText(inputClearText, null);
 		LinkedList<Integer> keyNumerical	= CryptoTools.numerizeText(key, null);
