@@ -17,7 +17,7 @@ import java.util.LinkedList;
 
 
 
-public class VigenereTest
+public class VigenereDecipher
 {
 // -------------------------------------------------
 // Attributes
@@ -32,33 +32,34 @@ public class VigenereTest
 	{
 		if (args.length < 3)
 		{
-			System.out.println("Usage: <clear text name> <cyphered text name> <key>");
+			System.out.println("Usage: <ciphered text name> <clear text name> <key>");
 			System.exit(0);
 		}
-		String clearFileName	= clearTextDir + args[0];
-		String cipheredFileName	= cipheredTextDir + args[1];
-		String key				= args[2];
-		BufferedReader clearFile= null;
-		Writer cipheredFile		= null;
+		String cipheredFileName		= cipheredTextDir + args[0];
+		String clearFileName		= clearTextDir + args[1];
+		String key					= args[2];
+		BufferedReader cipheredFile	= null;
+		Writer clearFile			= null;
 
 		try
 		{
-			clearFile		= new BufferedReader(new FileReader(clearFileName));
-			cipheredFile	= new BufferedWriter(new OutputStreamWriter(new FileOutputStream(cipheredFileName), "utf-8"));
+			cipheredFile	= new BufferedReader(new FileReader(cipheredFileName));
+			clearFile		= new BufferedWriter(new OutputStreamWriter(new FileOutputStream(clearFileName), "utf-8"));
 		}
 		catch (Exception e)
 		{
+			System.out.println("Usage: <ciphered text name> <clear text name> <key>");
 			e.printStackTrace();
-			System.out.println("Usage: <clear text name> <cyphered text name> <key>");
 			System.exit(0);
 		}
-		LinkedList<Integer> cipheredText = Vigenere.cipher(clearFile, key);
-		for (Integer i:cipheredText)
+		LinkedList<Integer> clearText = Vigenere.decipher(cipheredFile, key);
+		for (Integer i:clearText)
 		{
-			cipheredFile.write(i);
+			char c = CryptoTools.mumericalCharToAlphabetic(i);
+			clearFile.write(c);
 		}
 		clearFile.close();
 		cipheredFile.close();
-		System.out.println("End ciphering");
+		System.out.println("End of deciphering");
 	}
 }
